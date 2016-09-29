@@ -53,6 +53,11 @@ return [
             'root'   => storage_path('archivos'),
         ],
 
+        'profiles' => [
+            'driver' => 'local',
+            'root'   => public_path('profiles'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

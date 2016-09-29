@@ -40,3 +40,5 @@ Route::get('searchFormulacion/{id}','EducationController@search_Formulacion');
 Route::post('StoreUser','UserController@store');
 
 Route::post('log','UserController@loggin');
+
+Route::post('fileUpload','UserController@upload');
