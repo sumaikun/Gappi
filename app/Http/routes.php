@@ -35,10 +35,14 @@ Route::get('listshabilidad','EducationController@list_Habilidad');
 
 Route::post('StoreFormulacion','EducationController@create_Formulacion');
 
-Route::get('searchFormulacion/{id}','EducationController@search_Formulacion');
+Route::get('searchFormulacion/{id}','AskfactoryController@search_Formulacion');
 
 Route::post('StoreUser','UserController@store');
 
 Route::post('log','UserController@loggin');
 
 Route::post('fileUpload','UserController@upload');
+
+Route::get('credentials','UserController@credentials');
+
+Route::get('LogOut','UserController@logout');

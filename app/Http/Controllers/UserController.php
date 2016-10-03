@@ -53,6 +53,7 @@ class UserController extends Controller
     }
 
     public function loggin(Request $request){
+      
 
        $userdata=["email" =>$request->email,"password"=>$request->password];
 	   
@@ -61,10 +62,11 @@ class UserController extends Controller
 
           $user = User::Where('email','=',$request->email)->get();
 
-          Session::put('name', $usuario[0]->name);
-          Session::put('age', $usuario[0]->age);
-          Session::put('rol', $usuario[0]->rol);
-          Session::put('image', $usuario[0]->image);
+          Session::put('id',$user[0]->id); 
+          Session::put('name', $user[0]->name);
+          Session::put('age', $user[0]->age);
+          Session::put('rol', $user[0]->rol);
+          Session::put('image', $user[0]->image);
           
 
   		   return response()->json(["message"=>"Logeo exitoso"]);	                 
@@ -83,11 +85,23 @@ class UserController extends Controller
      
     $original_name = $file->getClientOriginalName();
      
-    $upload=Storage::disk('archivos')->put($original_name,  \File::get($file) );
-     //echo var_dump($request->file);
+    $upload=Storage::disk('archivos')->put($original_name,  \File::get($file) );    //echo var_dump($request->file);
 
     
 
      return 'his '.$original_name;
-   }  
+   } 
+
+   public function credentials()
+   {   
+
+     return response()->json(["id"=>Session::get('id'),"name"=>Session::get('name'),"age"=>Session::get('age'),"rol"=>Session::get('rol'),"image"=>Session::get('image')]);
+      
+   }
+
+   public function logout()
+   {
+      Auth::logout();
+      Session::flush();
+   } 
 }
