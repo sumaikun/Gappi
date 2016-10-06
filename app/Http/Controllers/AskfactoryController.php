@@ -197,7 +197,7 @@ class AskfactoryController extends Controller
        if(strrpos($kind_answer,'sum'))
        {
          $suma=null;               
-            for($i=0;$i<strlen($kind_answer);$i++)
+            for($i=0;$i<strlen($kind_answer);$i++)Confirmar correo electrónico
             {
                if($string_array[$i]=='<')
                 {   
@@ -315,5 +315,20 @@ class AskfactoryController extends Controller
 
 
     }*/
+
+   /*   public function list_challengues()
+    {
+        $formulations = Formulation::Where('is_challengue','=',1)->get();
+
+        foreach($formulations as $formulation)
+        {
+            $formulation->Enunciado = $this->random_vars($formulation->Enunciado);
+            $formulation->respuesta = $this->method_answer($formulation->respuesta); 
+        }
+
+        return response()->json($formulations);
+    }*/
+
+         
 
 }

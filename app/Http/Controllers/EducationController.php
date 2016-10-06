@@ -78,6 +78,14 @@ class EducationController extends Controller
         return response()->json(["message"=>"Formulacion Creada"]);
     }
 
+
+    public function list_challengues()
+    {
+        $formulations = Formulation::Where('is_challengue','=',1)->get();
+
+        return response()->json($formulations);
+    }
+
   
 
 }

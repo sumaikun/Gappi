@@ -46,3 +46,5 @@ Route::post('fileUpload','UserController@upload');
 Route::get('credentials','UserController@credentials');
 
 Route::get('LogOut','UserController@logout');
+
+Route::get('list_challengues','EducationController@list_challengues');
