@@ -48,3 +48,5 @@ Route::get('credentials','UserController@credentials');
 Route::get('LogOut','UserController@logout');
 
 Route::get('list_challengues','EducationController@list_challengues');
+
+Route::get('begin_challengues/{id}','ChallengueBuilder@generate_challengues');

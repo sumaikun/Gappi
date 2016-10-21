@@ -55,6 +55,8 @@ class AskfactoryController extends Controller
      //Metodos encargados de fabricar la pregunta
 
 
+    //metodo que se encarga de darle un numero a las variables y constantes
+
     public function random_vars ($parameter)
     {
         $string_array = str_split($parameter);
@@ -94,6 +96,7 @@ class AskfactoryController extends Controller
         return implode($string_array);
     }
 
+    //metodo que se encarga de identificar las etiquetas para reconocer un proceso
     public function labels($string_array,$i)
     {
     	if($string_array[$i].$string_array[$i+1].$string_array[$i+2].$string_array[$i+3].$string_array[$i+4]=='<var>')
@@ -112,6 +115,7 @@ class AskfactoryController extends Controller
     	}	
     }
 
+    //metodo que se encarga de reemplazar el texto de las etiquetas
     public function rpl_text($string_array,$n,$left,$right)
     {
 
@@ -135,6 +139,7 @@ class AskfactoryController extends Controller
     	return $string_array;	
     }
 
+    //metodo que se encarga de gestionar el proceso matematico basico
 	public function method_answer ($kind_answer)
 	{
 		$kind_answer = " ".$kind_answer." "; 
