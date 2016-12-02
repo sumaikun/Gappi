@@ -47,6 +47,12 @@ Route::get('credentials','UserController@credentials');
 
 Route::get('LogOut','UserController@logout');
 
+//Revizar
+
 Route::get('list_challengues','EducationController@list_challengues');
 
 Route::get('begin_challengues/{id}','ChallengueBuilder@generate_challengues');
+
+Route::post('set_score','QualificationController@get_score');
+
+Route::get('list_achivements','EducationController@list_achivements');

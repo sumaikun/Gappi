@@ -18,20 +18,21 @@ class ChallengueBuilder extends Controller
 
     public function generate_challengues($id)
     {
+    	//Versión antigua con limites lo cual ha sido rechazado en el momento
 
-	   	$formulation_ch = Formulation::Where('id','=',$id)->first();
+	   	//$formulation_ch = Formulation::Where('id','=',$id)->first();
 
-	    $limits = explode(',',$formulation_ch->size);
+	    /*$limits = explode(',',$formulation_ch->size);
 
 	    $limits[2] = ($limits[0]+$limits[1])/2;
 
 	    $final_size = array_rand($limits,1);
 
-	    $list_formulations = array();
+	    $list_formulations = array();*/
 
 	    //echo 'tamaño '.$limits[$final_size];
 
-	    for($i=0;$i<$limits[$final_size];$i++)
+	    for($i=0;$i<10;$i++)
 	    {	    	
 
 	    	$formulation_ch = Formulation::Where('id','=',$id)->first();

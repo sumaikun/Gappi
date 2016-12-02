@@ -12,15 +12,16 @@ use App\Models\skill;
 
 use App\Models\Formulation;
 
+use App\Models\Qualify;
+
 use App\Helpers\Methods;
+
+use App\Models\Achieve;
+
+use Session;
 
 class EducationController extends Controller
 {
-
-
-  
-
-
     public function create_Tema(Request $request)
     {
     	$tema = new Tema;
@@ -82,8 +83,43 @@ class EducationController extends Controller
     public function list_challengues()
     {
         $formulations = Formulation::Where('is_challengue','=',1)->get();
-
+        foreach ($formulations as $formulation) {
+            $score_value = 0;
+            $ask = Qualify::Where('user','=',Session::get('id'))->where('id_ask','=',$formulation->id)->get();
+            foreach($ask as $ask)
+            {
+                if($ask['score']>$score_value)
+                {
+                    $score_value=$ask['score'];
+                }    
+            }
+            
+            if($score_value==100)
+            {$formulation->color ='#3ADF00'; }
+            elseif($score_value>=70 and $score_value<=90)
+            {$formulation->color ='#00FF80'; }
+            elseif($score_value>=50 and $score_value<70)
+            {$formulation->color ='#2EFEC8'; }
+            elseif($score_value>=10 and $score_value<50)
+            {$formulation->color ='#CEF6EC'; }
+            else
+            {
+                $formulation->color ='white';
+            }
+                
+            
+        }
+        //return 'dsdsd';
         return response()->json($formulations);
+    }
+
+    public function list_achivements()
+    {
+        $achivements = Achieve::Where('user','=',Session::get('id'))->get();
+        foreach ($achivements as $achivement) {
+            $achivement->ask = $achivement->formulation;
+        }
+        return $achivements;
     }
 
   

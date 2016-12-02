@@ -44,7 +44,7 @@ class AskfactoryController extends Controller
            
             $formulaciones[$index]->respuesta = $this->method_answer($formulaciones[$index]->respuesta);
             
-    
+              //print_r($this->answer_vars);
              return response()->json($formulaciones[$index]); 
         }   
         else{
@@ -81,12 +81,25 @@ class AskfactoryController extends Controller
                 {
                 	//la K identificara constantes
                 	$index = 'K';
-                	$this->set_var($index,$string_array[$i+5]);
-                	$string_array = $this->rpl_text($string_array,$i,true,true);                	
+
+                    $flag=$i+5;
+                    $number = '';
+                    while(is_numeric($string_array[$flag]))
+                    {
+                        //echo 'numero '.$string_array[$flag];
+                       
+                        $number = $number.$string_array[$flag];
+                        $flag +=1; 
+                    }
+
+                	$this->set_var($index,$number);
+
+                    /*print_r($string_array);
+                    echo 'esto es i '.$i;
+                    echo '<br>';*/ 
+                	$string_array = $this->rpl_text($string_array,($i),true,true);                	
 				}                
-                //$array_merge = array($index=>$string_array[$i+1]);
-                //echo var_dump($array_merge);
-                //array_push($this->answer_vars,$string_array[$i+1]);
+             
                 
             }
 
@@ -129,7 +142,19 @@ class AskfactoryController extends Controller
     	
 	    if($right == true)
 	    {
-	    	for($i=$n+6;$i<$n+12;$i++)	
+            if(is_numeric($string_array[$n+5])){
+               $flag = $n+5; 
+                while(is_numeric($string_array[$flag]))
+                {
+                    $flag +=1;
+                }
+
+            }
+            else{
+                $flag = $n+6;
+            }
+
+	    	for($i=$flag;$i<$flag+6;$i++)	
     		{
     			$string_array[$i] = '';
     		}	
@@ -192,148 +217,5 @@ class AskfactoryController extends Controller
         return $operation;
 	}    
 
-    /*public function method_answer ($kind_answer)
-    {
-
-       $datos = $this->get_ansvars();      
-       $kind_answer = " ".$kind_answer." "; 
-       $string_array = str_split($kind_answer);
-
-       if(strrpos($kind_answer,'sum'))
-       {
-         $suma=null;               
-            for($i=0;$i<strlen($kind_answer);$i++)Confirmar correo electrónico
-            {
-               if($string_array[$i]=='<')
-                {   
-                	if($this->labels($string_array,$i)=='var')
-					{
-						$index = $string_array[$i+5];
-                      
-	                    if($suma==null)
-	                    {                                               
-	                        $suma = $this->answer_vars[$index];                         
-	                           
-	                    }   
-	                    else
-	                    {
-	                       $suma = $suma+$this->answer_vars[$index];
-	                    }	
-					}
-
-					if($this->labels($string_array,$i)=='cos')
-                    {
-
-                    	$index = 'K';
-
-                    	if($suma==null)
-	                    {                                               
-	                        $suma = $this->answer_vars[$index];                         
-	                           
-	                    }   
-	                    else
-	                    {
-	                       $suma = $suma+$this->answer_vars[$index];
-	                    }	
-                    }   
-                   
-                }
-            }
-
-          return $suma;  
-
-       }
-
-       elseif(strrpos($kind_answer,'rest')) {
-
-            $resta=null;
-
-            for($i=0;$i<strlen($kind_answer);$i++)
-            {
-               if($string_array[$i]=='$')
-                {                   
-                     $index = $string_array[$i+1];
-                    if($resta==null)
-                    {
-                      $resta = $this->answer_vars[$index];                    
-                    }
-                    else
-                    {
-                      $resta = $resta-$this->answer_vars[$index];
-                    }
-                   
-                }
-            }
-
-          return $resta;
-            
-       } 
-
-       elseif(strrpos($kind_answer,'mult')) {
-
-          $mult = null;
-
-            for($i=0;$i<strlen($kind_answer);$i++)
-            {
-               if($string_array[$i]=='$')
-                {                   
-                    $index = $string_array[$i+1];
-                    if($mult==null){
-
-                        $mult = $this->answer_vars[$index];
-                    }
-                    else {
-
-                        $mult = $mult*$this->answer_vars[$index];
-                    }                   
-                   
-                }
-            }
-
-          return $mult;
-            
-       }
-
-       elseif(strrpos($kind_answer,'div')) {
-
-         $divi = null;
-
-            for($i=0;$i<strlen($kind_answer);$i++)
-            {
-               if($string_array[$i]=='$')
-                {                   
-                    $index = $string_array[$i+1];
-                    if($divi==null){
-                        $divi = $this->answer_vars[$index];
-                    }
-                    else {
-                        $divi = $divi/$this->answer_vars[$index];    
-                    }
-                    
-                   
-                }
-            }
-
-          return number_format($divi,2);
-            
-       }
-
-
-    }*/
-
-   /*   public function list_challengues()
-    {
-        $formulations = Formulation::Where('is_challengue','=',1)->get();
-
-        foreach($formulations as $formulation)
-        {
-            $formulation->Enunciado = $this->random_vars($formulation->Enunciado);
-            $formulation->respuesta = $this->method_answer($formulation->respuesta); 
-        }
-
-        return response()->json($formulations);
-    }*/
-
-         
 
 }
