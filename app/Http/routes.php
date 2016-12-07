@@ -53,6 +53,18 @@ Route::get('list_challengues','EducationController@list_challengues');
 
 Route::get('begin_challengues/{id}','ChallengueBuilder@generate_challengues');
 
+//Logros
+
 Route::post('set_score','QualificationController@get_score');
 
 Route::get('list_achivements','EducationController@list_achivements');
+
+//Graficas
+
+Route::get('general_score_chart','ChartController@chart_gene_scores');
+
+Route::get('general_attemps','ChartController@chart_gene_attemps');
+
+//Rule of 3
+
+Route::get('generate_rule3question','Rule3Builder@generate_question');

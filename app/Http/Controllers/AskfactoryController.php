@@ -22,7 +22,7 @@ class AskfactoryController extends Controller
         $this->answer_vars[$index] = $value;
     }
 
-    private function get_ansvars()
+    public function get_ansvars()
     {
         return $this->answer_vars;
     }  
@@ -60,7 +60,6 @@ class AskfactoryController extends Controller
     public function random_vars ($parameter)
     {
         $string_array = str_split($parameter);
-
         
 
         for($i=0;$i<strlen($parameter);$i++)
