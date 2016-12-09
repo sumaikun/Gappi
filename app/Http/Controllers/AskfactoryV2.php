@@ -263,12 +263,16 @@ class AskfactoryV2 extends Controller
     	print_r($oper_pos);
     	print_r($asoc_var);
 
+    	$change = '';
+    	$temp_text = '';
+    	$last_value = 0;
     	for($i=count($oper_array)-1;$i>-1;$i--)
-    	{
+    	{    		
+
     		$str = "";
     		//echo $oper_array[$i];
 			$j=$oper_pos[$i];
-			$text_oper = $oper_array[$i];
+			$text_oper = $oper_array[$i];			
 
 			while($text_answer[$j].$text_answer[$j+1].$text_answer[$j+2]!='</'.$text_oper[0])
 			{
@@ -277,8 +281,22 @@ class AskfactoryV2 extends Controller
 			}
 			$str = $str.'</'.$oper_array[$i].'>';
 			//echo $str;
-    		echo 'esta es una respuesta '.$this->method_answer($str);
-    		
+			if($change=='')
+			{
+				echo 'esta es una respuesta '.$this->method_answer($str);
+				$last_value = $this->method_answer($str);
+				$temp_text = $str; 
+				$change = 'change';	
+			}
+    		else{
+    			$key = array_search($last_value, $this->answer_vars);
+    			echo 'esta es la key '.$key;
+	    		$str_copy = str_replace($temp_text,'',$str);
+	    		$temp_text = $str;
+    			echo 'segundo texto '.$str_copy;
+    			break;
+
+    		}    		
     	}
 
 
@@ -315,6 +333,7 @@ class AskfactoryV2 extends Controller
 	                   //$operation = $operation+$this->answer_vars[$index];
 	                   //echo 'operadores '.$operation.' y '.$this->answer_vars[$index];	
 	                   $operation = maths_basic_oper::$process($operation,$this->answer_vars[$index]);
+	                   $this->set_var($index,$operation);
 	                }	
 				}
 
