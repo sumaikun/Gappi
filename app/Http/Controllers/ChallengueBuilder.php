@@ -54,24 +54,6 @@ class ChallengueBuilder extends Controller
     	
     }
 
-	 public function labels($string_array,$i)
-    {
-    	if($string_array[$i].$string_array[$i+1].$string_array[$i+2].$string_array[$i+3].$string_array[$i+4]=='<var>')
-    	{
-    		return 'var';
-    	}
-
-    	if($string_array[$i].$string_array[$i+1].$string_array[$i+2].$string_array[$i+3].$string_array[$i+4]=='<cos>')
-    	{
-    		return 'cos';
-    	}
-
-    	if($string_array[$i].$string_array[$i+1].$string_array[$i+2].$string_array[$i+3].$string_array[$i+4]=='<sum>')
-    	{
-    		return 'sum';
-    	}	
-    }
-
 
         
 }

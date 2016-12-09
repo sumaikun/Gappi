@@ -213,7 +213,132 @@ class AskfactoryV2 extends Controller
     	else{
     		return 'en indice '.$index.' aun no puedo realizar el proceso ';
     	}
+    }
+
+    public function answer_structure($text_answer)
+    {
+    	//return $text_answer;
+    	$oper_array =  array();
+    	$oper_pos = array();
+    	$asoc_var = array();
+    	for($i=0;$i<strlen($text_answer);$i++)
+    	{
+    		if($text_answer[$i]=='<')
+    		{
+    			$oper = '';
+    			$vari = '';
+    			$n = $i ;    			
+    		
+
+    			while($text_answer[$i]!='>' and $text_answer[$i]!='/')
+    			{    				
+    				$i+=1;	
+
+            		if($text_answer[$i]=='v')
+            		{
+            			
+            			if($this->labels($text_answer,$i-1)=='var')
+            			{            				            				
+                			$vari= $vari.$text_answer[$i+4];
+                			array_push($asoc_var, $vari);
+            			}
+            		}            		
+					
+    				if($text_answer[$i]!='>'and $text_answer[$i]!='/')
+    				{
+    					$oper = $oper.$text_answer[$i];
+    				}           		 	  				    				
+
+    			}
+    			if(!(in_array($oper, $oper_array)) and $oper!='var' and $oper!='cos' and $oper!='' )
+    			{
+    				array_push($oper_array, $oper);
+    				array_push($oper_pos, $n);    				
+    			}
+    			 
+    		}
+    	}
+
+    	print_r($oper_array);
+    	print_r($oper_pos);
+    	print_r($asoc_var);
+
+    	for($i=count($oper_array)-1;$i>-1;$i--)
+    	{
+    		$str = "";
+    		//echo $oper_array[$i];
+			$j=$oper_pos[$i];
+			$text_oper = $oper_array[$i];
+
+			while($text_answer[$j].$text_answer[$j+1].$text_answer[$j+2]!='</'.$text_oper[0])
+			{
+				$str=$str.$text_answer[$j];
+				$j++;	
+			}
+			$str = $str.'</'.$oper_array[$i].'>';
+			//echo $str;
+    		echo 'esta es una respuesta '.$this->method_answer($str);
+    		
+    	}
+
+
+    	return $text_answer;
     } 
+
+
+	public function method_answer ($kind_answer)
+	{
+
+		$kind_answer = " ".$kind_answer." "; 
+        $string_array = str_split($kind_answer);
+        if(strrpos($kind_answer,'sum')){$process = 'sum';}
+        if(strrpos($kind_answer,'rest')){$process = 'rest';}
+        if(strrpos($kind_answer,'mult')){$process = 'mult';}
+        if(strrpos($kind_answer,'divi')){$process = 'divi';}
+
+        $operation = null;	
+        for($i=0;$i<strlen($kind_answer);$i++)
+        {
+	        if($string_array[$i]=='<')
+	        {
+	        	if($this->labels($string_array,$i)=='var')
+				{
+					$index = $string_array[$i+5];
+	              
+	                if($operation==null)
+	                {                                               
+	                    $operation = $this->answer_vars[$index];                         
+	                       
+	                }   
+	                else
+	                {
+	                   //$operation = $operation+$this->answer_vars[$index];
+	                   //echo 'operadores '.$operation.' y '.$this->answer_vars[$index];	
+	                   $operation = maths_basic_oper::$process($operation,$this->answer_vars[$index]);
+	                }	
+				}
+
+				if($this->labels($string_array,$i)=='cos')
+	            {
+
+	            	$index = 'K';
+
+	            	if($operation==null)
+	                {                                               
+	                    $operation = $this->answer_vars[$index];                         
+	                       
+	                }   
+	                else
+	                {
+	                    $operation = maths_basic_oper::$process($operation,$this->answer_vars[$index]);
+	                }	
+	            }
+	        }	
+        }
+
+        return $operation;
+	}    
+
 
     
 

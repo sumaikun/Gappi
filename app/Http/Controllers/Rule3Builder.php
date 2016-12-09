@@ -20,6 +20,7 @@ class Rule3Builder extends Controller
 	public function generate_question(){
 		$question = Formulation::where('skill_id','=',5)->first();
 		$question->Enunciado = $this->factory->random_vars($question->Enunciado);
+		$question->respuesta = $this->factory->answer_structure($question->respuesta);
 		print_r($this->factory->get_ansvars());
 		echo 'variables de condiciones';
 		print_r($this->factory->get_prop());
