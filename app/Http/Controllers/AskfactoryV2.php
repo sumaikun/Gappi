@@ -53,7 +53,8 @@ class AskfactoryV2 extends Controller
 
 	                	if(isset($this->condition_prop['first']))
 	                	{
-	                		echo $this->validate_condition($index,$value);
+	                		//echo
+	                		 $this->validate_condition($index,$value);
 	                	}
                 	
                 		$string_array[$i+5] = $this->answer_vars[$index]; 	
@@ -190,14 +191,14 @@ class AskfactoryV2 extends Controller
 
     public function validate_condition($index,$value){
 
-    	print_r($this->answer_vars);
+    	//print_r($this->answer_vars);
     	if(isset($this->answer_vars[$this->condition_prop['first']]) && isset($this->answer_vars[$this->condition_prop['second']]))
     	{
     		if($this->condition_prop['cond']=='>')
     		{
-    			if(!($this->answer_vars[$this->condition_prop['first']]>$this->answer_vars[$this->condition_prop['second']]))
+    			if(!($this->answer_vars[$this->condition_prop['first']]>=$this->answer_vars[$this->condition_prop['second']]))
 				{
-					while($this->answer_vars[$this->condition_prop['first']]<$this->answer_vars[$this->condition_prop['second']])
+					while($this->answer_vars[$this->condition_prop['first']]<=$this->answer_vars[$this->condition_prop['second']])
 					{
 						$this->answer_vars[$this->condition_prop['first']] = rand(1,30);
 					}
@@ -259,13 +260,14 @@ class AskfactoryV2 extends Controller
     		}
     	}
 
-    	print_r($oper_array);
-    	print_r($oper_pos);
-    	print_r($asoc_var);
+    	//print_r($oper_array);
+    	//print_r($oper_pos);
+    	//print_r($asoc_var);
 
     	$change = '';
     	$temp_text = '';
     	$last_value = 0;
+    	
     	for($i=count($oper_array)-1;$i>-1;$i--)
     	{    		
 
@@ -283,24 +285,29 @@ class AskfactoryV2 extends Controller
 			//echo $str;
 			if($change=='')
 			{
-				echo 'esta es una respuesta '.$this->method_answer($str);
 				$last_value = $this->method_answer($str);
+				$answer = $last_value; 
+				//echo 'esta es una respuesta '.$last_value;				
 				$temp_text = $str; 
 				$change = 'change';	
 			}
     		else{
     			$key = array_search($last_value, $this->answer_vars);
-    			echo 'esta es la key '.$key;
+    			//echo 'esta es la key '.$key;
+    			$conca_key = '<var>'.$key.'</var>';
 	    		$str_copy = str_replace($temp_text,'',$str);
-	    		$temp_text = $str;
-    			echo 'segundo texto '.$str_copy;
-    			break;
+	    		$temp_text = $str;	    		
+    			//echo 'segundo texto '.$str_copy;
+    			$final_text =substr($str_copy, 0,strlen($oper_array[$i])+2).$conca_key.substr($str_copy,strlen($oper_array[$i])+2,strlen($str_copy));
+    			//echo 'texto final '.$final_text; 
+    			//echo 'operacion final '.$this->method_answer($final_text);
+    			$answer = $this->method_answer($final_text);
 
     		}    		
     	}
 
 
-    	return $text_answer;
+    	return $answer;
     } 
 
 

@@ -68,3 +68,5 @@ Route::get('general_attemps','ChartController@chart_gene_attemps');
 //Rule of 3
 
 Route::get('generate_rule3question','Rule3Builder@generate_question');
+
+Route::get('qualify_ask/{id}/{answer}','Rule3Builder@getfromcache');
