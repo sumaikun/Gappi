@@ -207,7 +207,13 @@ class AskfactoryV2 extends Controller
     		}
     		if($this->condition_prop['cond']=='<')
     		{
-    			return 'menor que';
+    			if(!($this->answer_vars[$this->condition_prop['first']]<=$this->answer_vars[$this->condition_prop['second']]))
+                {
+                    while($this->answer_vars[$this->condition_prop['first']]>=$this->answer_vars[$this->condition_prop['second']])
+                    {
+                        $this->answer_vars[$this->condition_prop['first']] = rand(1,30);
+                    }
+                }
     		}
 
     	}
