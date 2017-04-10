@@ -70,3 +70,9 @@ Route::get('general_attemps','ChartController@chart_gene_attemps');
 Route::get('generate_rule3question','Rule3Builder@generate_question');
 
 Route::get('qualify_ask/{id}/{answer}','Rule3Builder@getfromcache');
+
+//exams
+
+Route::get('take_five_questions','Rule3Builder@take_five_questions');
+
+Route::get('qualify_ask/{id}/{answer}','Rule3Builder@getfromcache');
